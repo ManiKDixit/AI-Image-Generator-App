@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import OpenAI from 'openai'; // Updated import
 import '../ImageGenerator/ImageGenerator.css';
 import default_image from '../assets/Default_Create_a_dream_sequence_where_Maya_who_is_wearing_a_fl_0.jpg'; // Corrected path
-import GridLoader from 'react-spinners/GridLoader'
+import HashLoader from 'react-spinners/HashLoader'
 function ImageGenerator() {
   const [prompt, setPrompt] = useState('');
   const [generatedImage, setGeneratedImage] = useState("");
@@ -20,10 +20,9 @@ function ImageGenerator() {
 
   const generateImage = async () => {
     setshowDefaultImage(false); // Set loading state to true
-    if(showDefaultImage == false)
-    {
-        setLoading(true)
-    }
+    
+        setLoading(true);
+    
 
     try {
         const response = await openai.images.generate({
@@ -39,9 +38,9 @@ function ImageGenerator() {
           console.log(imageData)
           if(imageData != null)
           {
-            //setLoading(false);
+            
             setGeneratedImage(imageData);
-            setLoading(false)
+            //setLoading(false)
           }
           
         } else {
@@ -55,21 +54,26 @@ function ImageGenerator() {
       } catch (error) {
         console.error('Error generating image:', error);
         // Provide user feedback or retry options
-      }
+        }
+        finally {
+          setLoading(false)
+        }
   };
 
   return (
+    
     <div className="ai-image-generator">
       <div className="header">
         AI Image <span>Generator</span>
         <div className="img-loading">
           <div className="image">
-            <img src={showDefaultImage ? default_image : ""}></img>
-            {loading ? <GridLoader color='#AA336A' loading={loading}  size={100}/> : 
-             <img
+          {loading ? (<HashLoader color='#AA336A' loading={loading}  size={100}/>) : 
+             (<img
               src={generatedImage} // Display default image while loading
               alt=""
-            />}
+            />)}
+            <img src={showDefaultImage ? default_image : ""} alt=''></img>
+           
            
           </div>
         </div>
