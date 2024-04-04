@@ -79,7 +79,7 @@ function ImageGenerator() {
         </div>
       </div>
       <div className="search-box">
-        <input
+        <textarea
           type="text"
           className="search-input"
           placeholder="Describe the image you want to generate. Be creative!"
